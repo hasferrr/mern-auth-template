@@ -1,0 +1,19 @@
+{
+  "name": "mern-auth-template",
+  "module": "index.ts",
+  "type": "module",
+  "scripts": {
+    "lint": "eslint ."
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/bun": "latest",
+    "eslint": "^9.13.0",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "eslint-plugin-react-refresh": "^0.4.14",
+    "typescript-eslint": "^8.11.0"
+  }
+}
