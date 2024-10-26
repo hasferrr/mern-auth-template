@@ -2,6 +2,15 @@
 
 ## Getting Started
 
+Environment variables
+
+```.env
+MONGODB_URI=mongodb+srv://<username>:<db_password>@cluster0.qqnfc.mongodb.net
+PORT=8080
+```
+
+Install dependency and run
+
 ```bash
 bun install
 bun dev
