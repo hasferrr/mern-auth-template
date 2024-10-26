@@ -5,8 +5,9 @@
 Environment variables
 
 ```.env
-MONGODB_URI=mongodb+srv://<username>:<db_password>@cluster0.qqnfc.mongodb.net
 PORT=8080
+MONGODB_URI=mongodb+srv://<username>:<db_password>@cluster0.qqnfc.mongodb.net
+SECRET=secret
 ```
 
 Install dependency and run
@@ -18,12 +19,14 @@ bun dev
 
 ## API Documentation
 
-Summary
+### Summary
 
 | **Endpoint**         | **Method** | **Description**        |
 | -------------------- | ---------- | ---------------------- |
 | `/api/auth/register` | `POST`     | Register a new user    |
 | `/api/auth/login`    | `POST`     | Login an existing user |
+
+---
 
 ### POST /api/auth/register
 
@@ -33,21 +36,43 @@ Summary
 - **Method**: `POST`
 - **Request Body**:
   - `username` (string): The new user's username.
+  - `email` (string): The new user's email.
   - `password` (string): The new user's password.
 - **Response**:
-  - **201**: User registered successfully.
+  - **201**: User registered successfully along with JWT token.
 
     ```json
-    { "message": "User registered successfully" }
+    {
+      "message": "register success",
+      "user": {
+        "_id": "user_id_here",
+        "username": "new_username",
+        "email": "new_email",
+        "passwordHash": "hashed_password"
+      },
+      "token": "jwt_token_here"
+    }
     ```
 
-  - **400**: If any required field is missing or invalid.
+  - **400**: Invalid request body or input validation error.
 
-    ```json
-    { "message": "Invalid input" }
-    ```
+    - If required fields are missing:
 
-  - **500**: Error occurred during registration.
+      ```json
+      { "message": "invalid request body" }
+      ```
+
+    - If `username` or `password` are too short or too long:
+
+      ```json
+      { "message": "username or password too short/long" }
+      ```
+
+    - If `username` or `email` already exists:
+
+      ```json
+      { "message": "username or email already in use" }
+      ```
 
 ---
 
@@ -58,19 +83,35 @@ Summary
 - **URL**: `/api/auth/login`
 - **Method**: `POST`
 - **Request Body**:
-  - `username` (string): The user's username.
+  - `username` (string): The user's username. (optional, if `email` is provided)
+  - `email` (string): The user's email. (optional, if `username` is provided)
   - `password` (string): The user's password.
 - **Response**:
-  - **200**: Login successful. Returns a JWT token.
+  - **200**: Login successful. Returns the user object and a JWT token.
 
     ```json
-    { "token": "jwt_token_here" }
+    {
+      "message": "login success",
+      "user": {
+        "_id": "user_id_here",
+        "username": "existing_username",
+        "email": "existing_email",
+        "passwordHash": "hashed_password"
+      },
+      "token": "jwt_token_here"
+    }
     ```
 
-  - **400**: Invalid credentials.
+  - **400**: Invalid credentials or invalid request body.
 
-    ```json
-    { "message": "Invalid credentials" }
-    ```
+    - If both `username` and `email` are missing:
 
-  - **500**: Error occurred during login.
+      ```json
+      { "message": "invalid request body" }
+      ```
+
+    - If credentials are incorrect:
+
+      ```json
+      { "message": "invalid credentials" }
+      ```
