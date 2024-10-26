@@ -1,12 +1,8 @@
-import express from 'express'
+import app from './src/app'
 
-const app = express()
-const port = 8080
+const PORT = process.env.PORT || 8080
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
-
-app.listen(port, () => {
-  console.log(`Listening on port ${port}...`)
+app.listen(PORT, () => {
+  console.log(`Listening on port ${PORT}`)
+  console.log(`Server is running on http://localhost:${PORT}`)
 })
