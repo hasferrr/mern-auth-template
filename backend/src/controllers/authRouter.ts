@@ -3,9 +3,9 @@ import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import { User } from '../models/user'
 
-const auth = routes.Router()
+const authRouter = routes.Router()
 
-auth.post('/login', async (req, res) => {
+authRouter.post('/login', async (req, res) => {
   const { username, email, password } = req.body
   if (!username && !email) {
     res.status(400).json({ message: 'invalid request body' })
@@ -28,7 +28,7 @@ auth.post('/login', async (req, res) => {
   res.status(200).json({ message: 'login success', user, token })
 })
 
-auth.post('/register', async (req, res) => {
+authRouter.post('/register', async (req, res) => {
   const { username, email, password } = req.body
   if (!username || !email || !password) {
     res.status(400).json({ message: 'invalid request body' })
@@ -56,4 +56,4 @@ auth.post('/register', async (req, res) => {
   res.status(201).json({ message: 'register success', user: savedUser, token })
 })
 
-export default auth
+export default authRouter

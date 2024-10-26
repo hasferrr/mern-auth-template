@@ -1,7 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import mongoose from 'mongoose'
-import auth from './controllers/auth'
+import authRouter from './controllers/authRouter'
 
 const app = express()
 
@@ -21,6 +21,6 @@ app.get('/', (req, res) => {
   res.send('ok')
 })
 
-app.use('/api/auth', auth)
+app.use('/api/auth', authRouter)
 
 export default app
