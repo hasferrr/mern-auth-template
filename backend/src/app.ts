@@ -36,7 +36,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/', googleAuthRouter)
-app.use('/api/auth', authRouter)
-app.use('/api/user', userRouter)
+app.use('/auth', authRouter)
+app.use('/user', userRouter)
 
 export default app

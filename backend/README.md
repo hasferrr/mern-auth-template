@@ -23,12 +23,12 @@ bun dev
 
 ### Summary
 
-| **Endpoint**         | **Method** | **Description**               | **Token Required?** |
-| -------------------- | ---------- | ----------------------------- | :-----------------: |
-| `/api/auth/register` | `POST`     | Register a new user           |          -          |
-| `/api/auth/login`    | `POST`     | Login an existing user        |          -          |
-| `/auth/google`       | `GET`      | Register or Login with Google |          -          |
-| `/api/user`          | `GET`      | Get user data                 |         yes         |
+| **Endpoint**     | **Method** | **Description**               | **Token Required?** |
+| ---------------- | ---------- | ----------------------------- | :-----------------: |
+| `/auth/register` | `POST`     | Register a new user           |          -          |
+| `/auth/login`    | `POST`     | Login an existing user        |          -          |
+| `/auth/google`   | `GET`      | Register or Login with Google |          -          |
+| `/user`          | `GET`      | Get user data                 |         yes         |
 
 #### Token Authorization
 
@@ -42,11 +42,11 @@ Put the token in the Header with `Authorization` key and `Bearer {token}` value.
 
 ---
 
-### POST /api/auth/register
+### POST /auth/register
 
 #### Register a new user
 
-- **URL**: `/api/auth/register`
+- **URL**: `/auth/register`
 - **Method**: `POST`
 - **Authorization**: none
 - **Request Body**:
@@ -59,12 +59,6 @@ Put the token in the Header with `Authorization` key and `Bearer {token}` value.
     ```json
     {
       "message": "register success",
-      "user": {
-        "_id": "user_id_here",
-        "username": "new_username",
-        "email": "new_email",
-        "passwordHash": "hashed_password"
-      },
       "token": "jwt_token_here"
     }
     ```
@@ -91,11 +85,11 @@ Put the token in the Header with `Authorization` key and `Bearer {token}` value.
 
 ---
 
-### POST /api/auth/login
+### POST /auth/login
 
 #### Login an existing user
 
-- **URL**: `/api/auth/login`
+- **URL**: `/auth/login`
 - **Method**: `POST`
 - **Authorization**: none
 - **Request Body**:
@@ -103,17 +97,11 @@ Put the token in the Header with `Authorization` key and `Bearer {token}` value.
   - `email` (string): The user's email. (optional, if `username` is provided)
   - `password` (string): The user's password.
 - **Response**:
-  - **200**: Login successful. Returns the user object and a JWT token.
+  - **200**: Login successful. Returns JWT token.
 
     ```json
     {
       "message": "login success",
-      "user": {
-        "_id": "user_id_here",
-        "username": "existing_username",
-        "email": "existing_email",
-        "passwordHash": "hashed_password"
-      },
       "token": "jwt_token_here"
     }
     ```
@@ -154,11 +142,11 @@ Put the token in the Header with `Authorization` key and `Bearer {token}` value.
 
 ---
 
-### GET /api/user
+### GET /user
 
 #### Get user data
 
-- **URL**: `/api/user`
+- **URL**: `/user`
 - **Method**: `GET`
 - **Authorization**: Bearer token
 - **Request Body**: none

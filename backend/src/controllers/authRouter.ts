@@ -25,14 +25,7 @@ authRouter.post('/login', async (req, res) => {
   const userForToken = { id: user._id, username: user.username }
   const token = jwt.sign(userForToken, process.env.SECRET!, { expiresIn: 60 * 60 })
 
-  res.status(200).json({
-    message: 'login success',
-    user: {
-      id: user._id,
-      username: user.username,
-    },
-    token,
-  })
+  res.status(200).json({ message: 'login success', token })
 })
 
 authRouter.post('/register', async (req, res) => {
@@ -59,16 +52,8 @@ authRouter.post('/register', async (req, res) => {
   const userForToken = { id: user._id, username: user.username }
   const token = jwt.sign(userForToken, process.env.SECRET!, { expiresIn: 60 * 60 })
 
-  const savedUser = await user.save()
-  console.log(savedUser)
-  res.status(201).json({
-    message: 'register success',
-    user: {
-      id: savedUser._id,
-      username: savedUser.username,
-    },
-    token,
-  })
+  await user.save()
+  res.status(201).json({ message: 'register success', token })
 })
 
 export default authRouter
