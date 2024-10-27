@@ -22,14 +22,19 @@ app.use(express.json())
 app.use(passport.initialize())
 // app.use(passport.session())
 
-mongoose.set('strictQuery', false)
-mongoose.connect(process.env.MONGODB_URI!)
-  .then(() => {
+const connectdb = async () => {
+  mongoose.set('strictQuery', false)
+  try {
+    console.log('connecting to database...')
+    await mongoose.connect(process.env.MONGODB_URI!)
     console.log('connected to MongoDB')
-  })
-  .catch((error) => {
-    console.log('error connecting to MongoDB:', error.message)
-  })
+  } catch (error) {
+    if (error instanceof Error) {
+      console.log('error connecting to MongoDB:', error.message)
+    }
+  }
+}
+await connectdb()
 
 app.get('/', (req, res) => {
   res.send('ok')
