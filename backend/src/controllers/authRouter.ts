@@ -16,7 +16,7 @@ authRouter.post('/login', async (req, res) => {
     ? await User.findOne({ username })
     : await User.findOne({ email })
 
-  const passMatch = user ? await bcrypt.compare(password, user.passwordHash) : false
+  const passMatch = (user && user.passwordHash) ? await bcrypt.compare(password, user.passwordHash) : false
   if (!user || !passMatch) {
     res.status(400).json({ message: 'invalid credentials' })
     return
