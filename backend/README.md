@@ -8,6 +8,8 @@ Environment variables
 PORT=8080
 MONGODB_URI=mongodb+srv://<username>:<db_password>@cluster0.qqnfc.mongodb.net
 SECRET=secret
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
 ```
 
 Install dependency and run
@@ -21,10 +23,22 @@ bun dev
 
 ### Summary
 
-| **Endpoint**         | **Method** | **Description**        |
-| -------------------- | ---------- | ---------------------- |
-| `/api/auth/register` | `POST`     | Register a new user    |
-| `/api/auth/login`    | `POST`     | Login an existing user |
+| **Endpoint**         | **Method** | **Description**               | **Token Required?** |
+| -------------------- | ---------- | ----------------------------- | :-----------------: |
+| `/api/auth/register` | `POST`     | Register a new user           |          -          |
+| `/api/auth/login`    | `POST`     | Login an existing user        |          -          |
+| `/auth/google`       | `GET`      | Register or Login with Google |          -          |
+| `/api/user`          | `GET`      | Get user data                 |         yes         |
+
+#### Token Authorization
+
+Put the token in the Header with `Authorization` key and `Bearer {token}` value.
+
+```json
+{
+  "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
+```
 
 ---
 
@@ -34,6 +48,7 @@ bun dev
 
 - **URL**: `/api/auth/register`
 - **Method**: `POST`
+- **Authorization**: none
 - **Request Body**:
   - `username` (string): The new user's username.
   - `email` (string): The new user's email.
@@ -82,6 +97,7 @@ bun dev
 
 - **URL**: `/api/auth/login`
 - **Method**: `POST`
+- **Authorization**: none
 - **Request Body**:
   - `username` (string): The user's username. (optional, if `email` is provided)
   - `email` (string): The user's email. (optional, if `username` is provided)
@@ -114,4 +130,54 @@ bun dev
 
       ```json
       { "message": "invalid credentials" }
+      ```
+
+---
+
+### GET /auth/google
+
+#### Register or Login with Google
+
+- **URL**: `/auth/google`
+- **Method**: `GET`
+- **Authorization**: none
+- **Request Body**: none
+- **Response**:
+  - **200**: Returns JWT token.
+
+    ```json
+    {
+      "message": "google login success",
+      "token": "jwt_token_here"
+    }
+    ```
+
+---
+
+### GET /api/user
+
+#### Get user data
+
+- **URL**: `/api/user`
+- **Method**: `GET`
+- **Authorization**: Bearer token
+- **Request Body**: none
+- **Response**:
+  - **200**: Returns the user object and a JWT token.
+
+    ```json
+    {
+      "message": "google login success",
+      "token": "jwt_token_here"
+    }
+    ```
+
+  - **401**: Invalid token.
+
+      ```json
+      { "message": "user is not found" }
+      ```
+
+      ```json
+      { "message": "token is invalid" }
       ```
