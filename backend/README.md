@@ -23,12 +23,12 @@ bun dev
 
 ### Summary
 
-| **Endpoint**     | **Method** | **Description**               | **Token?** |
-| ---------------- | ---------- | ----------------------------- | :--------: |
-| `/auth/register` | `POST`     | Register a new user           |     -      |
-| `/auth/login`    | `POST`     | Login an existing user        |     -      |
-| `/auth/google`   | `GET`      | Register or Login with Google |     -      |
-| `/user`          | `GET`      | Get user data                 |    yes     |
+| **Endpoint**     | **Method** | **Description**               |             **Body**              | **Token?** |
+| ---------------- | ---------- | ----------------------------- | :-------------------------------: | :--------: |
+| `/auth/register` | `POST`     | Register a new user           |  `username`, `email`, `password`  |     -      |
+| `/auth/login`    | `POST`     | Login an existing user        | `username` or `email`, `password` |     -      |
+| `/auth/google`   | `GET`      | Register or Login with Google |                 -                 |     -      |
+| `/user`          | `GET`      | Get user data                 |                 -                 |    yes     |
 
 #### Token Authorization
 
