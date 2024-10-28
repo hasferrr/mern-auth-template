@@ -25,7 +25,8 @@ authRouter.post('/login', async (req, res) => {
   const userForToken = { id: user._id, username: user.username }
   const token = jwt.sign(userForToken, process.env.SECRET!, { expiresIn: 60 * 60 })
 
-  res.status(200).json({ message: 'login success', token })
+  res.cookie('jwt', token, { maxAge: 1000 * 60 * 60 })
+  res.status(200).json({ message: 'login success' })
 })
 
 authRouter.post('/register', async (req, res) => {
@@ -53,7 +54,9 @@ authRouter.post('/register', async (req, res) => {
   const token = jwt.sign(userForToken, process.env.SECRET!, { expiresIn: 60 * 60 })
 
   await user.save()
-  res.status(201).json({ message: 'register success', token })
+
+  res.cookie('jwt', token, { maxAge: 1000 * 60 * 60 })
+  res.status(201).json({ message: 'register success' })
 })
 
 export default authRouter
