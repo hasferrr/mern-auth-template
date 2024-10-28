@@ -6,11 +6,12 @@ Environment variables
 
 ```.env
 PORT=8080
-MONGODB_URI=mongodb+srv://<username>:<db_password>@cluster0.qqnfc.mongodb.net
+BACKEND_URL=http://localhost:8080
+FRONTEND_URL=http://localhost:5173
 SECRET=secret
+MONGODB_URI=mongodb+srv://<username>:<db_password>@cluster0.qqnfc.mongodb.net
 GOOGLE_CLIENT_ID=
 GOOGLE_CLIENT_SECRET=
-CLIENT_URL=http://localhost:5173
 ```
 
 Install dependencies and run
@@ -33,10 +34,38 @@ bun dev
 
 #### Token Authorization
 
+##### Method 1
+
+Put token into cookies and allow credentials in axios requests.
+
+```ts
+await axios.get(baseUrl, {
+  withCredentials: true,
+})
+```
+
+Get cookies from `req.cookies` object.
+
+```ts
+(req: Request, res: Response) => {
+  const token: string | null = req.cookies.jwt
+}
+```
+
+##### Method 2
+
 Put the token in the Header with `Authorization` key and `Bearer {token}` value.
 
 ```json
 {
   "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
+```
+
+Get the token from the header.
+
+```ts
+(req: Request, res: Response) => {
+  const authorization: string | undefined = req.get('authorization')
 }
 ```

@@ -8,7 +8,7 @@ export const passportStrategy = () => {
       {
         clientID: process.env.GOOGLE_CLIENT_ID!,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-        callbackURL: `http://localhost:${process.env.PORT!}/auth/google/callback`,
+        callbackURL: `${process.env.BACKEND_URL!}/auth/google/callback`,
       },
       async (accessToken, refreshToken, profile, done) => {
         try {
@@ -17,7 +17,6 @@ export const passportStrategy = () => {
             return done(new Error('No email found for this user'), false)
           }
 
-          // Check if user already exists in the database
           let user = await User.findOne({ email })
           if (!user) {
             user = new User({

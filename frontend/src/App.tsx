@@ -25,7 +25,7 @@ const App = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
       <h1>Welcome</h1>
-      <a href="http://localhost:8080/auth/google" style={{ width: 0 }}>
+      <a href={`${import.meta.env.VITE_BACKEND_URL}/auth/google`} style={{ width: 0 }}>
         <button style={{ width: '10rem' }}>
           Sign in with Google
         </button>

@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = 'http://localhost:8080/user'
+const baseUrl = import.meta.env.VITE_BACKEND_URL
 
 let token: string | null = null
 
@@ -13,6 +13,6 @@ export const getUser = async () => {
     // headers: { Authorization: token }, // send bearer token
     withCredentials: true, // send cookie
   }
-  const res = await axios.get(baseUrl, config)
+  const res = await axios.get(`${baseUrl}/user`, config)
   return res.data
 }
