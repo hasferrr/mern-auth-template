@@ -10,9 +10,10 @@ MONGODB_URI=mongodb+srv://<username>:<db_password>@cluster0.qqnfc.mongodb.net
 SECRET=secret
 GOOGLE_CLIENT_ID=
 GOOGLE_CLIENT_SECRET=
+CLIENT_URL=http://localhost:5173
 ```
 
-Install dependency and run
+Install dependencies and run
 
 ```bash
 bun install
