@@ -1,16 +1,39 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import Cookies from 'js-cookie'
+import { getUser, setToken } from './services/service'
 
 const App = () => {
-  const [count, setCount] = useState(0)
+  const [user, setUser] = useState(null)
+
+  useEffect(() => {
+    const token = Cookies.get('jwt')
+    if (token) {
+      setToken(token)
+      const getAndSetUserData = async () => {
+        const data = await getUser()
+        setUser(data.user)
+      }
+      getAndSetUserData()
+    }
+  }, [])
+
+  const handleLogOut = () => {
+    Cookies.remove('jwt')
+    setUser(null)
+  }
 
   return (
-    <div>
-      <h1>Vite + React</h1>
-      <div>
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+    <div style={{ display: 'flex', flexDirection: 'column' }}>
+      <h1>Welcome</h1>
+      <a href="http://localhost:8080/auth/google" style={{ width: 0 }}>
+        <button style={{ width: '10rem' }}>
+          Sign in with Google
         </button>
-      </div>
+      </a>
+      <button onClick={handleLogOut} style={{ width: '10rem' }}>
+        Log Out
+      </button>
+      <div>{JSON.stringify(user)}</div>
     </div>
   )
 }
