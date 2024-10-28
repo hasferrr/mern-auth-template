@@ -23,7 +23,7 @@ googleAuthRouter.get(
     const user = req.user as { id: string, username: string }
     const userForToken = { id: user.id, username: user.username }
     const token = jwt.sign(userForToken, process.env.SECRET!, { expiresIn: 60 * 60 })
-    res.cookie('jwt', token, { maxAge: 60 * 60 })
+    res.cookie('jwt', token, { maxAge: 1000 * 60 * 60 })
     res.redirect(process.env.CLIENT_URL!)
   }
 )

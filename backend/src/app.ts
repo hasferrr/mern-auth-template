@@ -7,6 +7,7 @@ import passport from 'passport'
 import authRouter from './controllers/authRouter'
 import userRouter from './controllers/userRouter'
 import googleAuthRouter from './controllers/googleAuthRouter'
+import { passportStrategy } from './configs/passport.config'
 
 const app = express()
 
@@ -35,6 +36,8 @@ const connectdb = async () => {
   }
 }
 await connectdb()
+
+passportStrategy()
 
 app.get('/', (req, res) => {
   res.send('ok')
