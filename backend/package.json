@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "dev": "bun --watch index.ts",
-    "lint": "eslint ../"
+    "lint": "eslint ../",
+    "tsc": "tsc --project tsconfig.json"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",

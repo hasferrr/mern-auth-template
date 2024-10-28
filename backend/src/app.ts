@@ -22,7 +22,7 @@ app.use(passport.initialize())
 await connectdb()
 passportStrategy()
 
-app.get('/', (_, res) => { res.send('ok') })
+app.get('/', (req, res) => { res.send('ok') })
 app.use('/auth', googleAuthRouter)
 app.use('/auth', authRouter)
 app.use('/user', userRouter)
