@@ -6,7 +6,7 @@ import passport from 'passport'
 
 import authRouter from './controllers/authRouter'
 import userRouter from './controllers/userRouter'
-import googleAuthRouter from './auth/googleAuth'
+import googleAuthRouter from './controllers/googleAuthRouter'
 
 const app = express()
 
@@ -40,7 +40,7 @@ app.get('/', (req, res) => {
   res.send('ok')
 })
 
-app.use('/', googleAuthRouter)
+app.use('/auth', googleAuthRouter)
 app.use('/auth', authRouter)
 app.use('/user', userRouter)
 
