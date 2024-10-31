@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken'
 import { User } from '../models/user'
 import type { NextFunction, Request, Response } from 'express'
+import { SECRET } from '../configs/env.config'
 
 export const tokenExtractor = async (req: Request, res: Response, next: NextFunction) => {
   // const authorization = req.get('authorization') || ''
@@ -24,7 +25,7 @@ export const userExtractor = async (req: Request, res: Response, next: NextFunct
   const token = req.locals!.token
   let decodedToken
   try {
-    decodedToken = jwt.verify(token, process.env.SECRET!)
+    decodedToken = jwt.verify(token, SECRET)
   } catch (error) {
     if (error instanceof Error) {
       res.status(401).json({ message: 'token is invalid', error: error.name })

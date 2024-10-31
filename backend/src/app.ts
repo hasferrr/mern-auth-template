@@ -8,11 +8,12 @@ import userRouter from './controllers/userRouter'
 import googleAuthRouter from './controllers/googleAuthRouter'
 import { passportStrategy } from './configs/passport.config'
 import { connectdb } from './libs/mongodb'
+import { FRONTEND_URL } from './configs/env.config'
 
 const app = express()
 
 app.use(cors({
-  origin: process.env.FRONTEND_URL!,
+  origin: FRONTEND_URL,
   credentials: true,
 }))
 app.use(express.json())

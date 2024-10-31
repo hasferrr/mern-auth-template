@@ -2,6 +2,7 @@ import routes from 'express'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import { User } from '../models/user'
+import { SECRET } from '../configs/env.config'
 
 const authRouter = routes.Router()
 
@@ -23,7 +24,7 @@ authRouter.post('/login', async (req, res) => {
   }
 
   const userForToken = { id: user._id, username: user.username }
-  const token = jwt.sign(userForToken, process.env.SECRET!, { expiresIn: 60 * 60 })
+  const token = jwt.sign(userForToken, SECRET, { expiresIn: 60 * 60 })
 
   res.cookie('jwt', token, { maxAge: 1000 * 60 * 60 })
   res.status(200).json({ message: 'login success' })
@@ -51,7 +52,7 @@ authRouter.post('/register', async (req, res) => {
 
   const user = new User({ username, email, passwordHash })
   const userForToken = { id: user._id, username: user.username }
-  const token = jwt.sign(userForToken, process.env.SECRET!, { expiresIn: 60 * 60 })
+  const token = jwt.sign(userForToken, SECRET, { expiresIn: 60 * 60 })
 
   await user.save()
 

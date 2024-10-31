@@ -1,8 +1,7 @@
-import app from './src/app'
+import app from './app'
+import { PORT } from './configs/env.config'
 
-const PORT = process.env.PORT || 8080
-
-app.listen(PORT, () => {
+app.listen(PORT || 8080, () => {
   console.log(`Listening on port ${PORT}`)
   console.log(`Server is running on http://localhost:${PORT}`)
 })
